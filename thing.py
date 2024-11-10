@@ -1,5 +1,14 @@
 import pandas as pd
-df = pd.read_csv("Roni_s Challenge public/Provided Data [FINAL]/april_2024.csv")
+df1 = pd.read_csv("Roni_s Challenge public/Provided Data [FINAL]/april_2024.csv")
+df2 = pd.read_csv("Roni_s Challenge public/Provided Data [FINAL]/august_2024.csv")
+df3 = pd.read_csv("Roni_s Challenge public/Provided Data [FINAL]/july_2024.csv")
+df4 = pd.read_csv("Roni_s Challenge public/Provided Data [FINAL]/june_2024.csv", encoding='ISO-8859-1')
+df5 = pd.read_csv("Roni_s Challenge public/Provided Data [FINAL]/may_2024.csv")
+df6 = pd.read_csv("Roni_s Challenge public/Provided Data [FINAL]/october_2024.csv")
+df7 = pd.read_csv("Roni_s Challenge public/Provided Data [FINAL]/september_2024.csv")
+
+dfs = [df1,df2,df3,df4,df5,df6,df7]
+df = pd.concat(dfs)
 
 #make dataframe of all unique entries in modifiers and add them to a list
 unique = df["Modifier"].unique()
@@ -34,12 +43,15 @@ for i in modif:
 
 
 
+noods = df[df["Option Group Name"] == "Noods"]
 
 grill = df[df["Parent Menu Selection"] == "Grilled Cheese Sandwich"]
 grill_2  = grill[grill["Option Group Name"] == "Choose Your Drink" ]
-print(grill_2.size)
 print(dict)
 print(dict_s)
+
+# print(dict)
+# print(dict_s)
 
 
 
