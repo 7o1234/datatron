@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Corrected Bootstrap Icons CDN link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+        * { 
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body { 
+            font-family: Arial, Helvetica, sans-serif;
+            transition: background 2s, color 2s; /* Add transition for smooth background and text color change */
+        }
+
+        /* Header container */
+        .header {
+            background-color: black;
+            padding: 20px 10px;
+            display: flex;
+            justify-content: space-between; /* Space between logo and right section */
+            align-items: center; /* Vertically center the items */
+        }
+
+        /* Logo styling */
+        .header a.logo img {
+            max-height: 50px; /* Adjust size of logo */
+            width: auto;
+        }
+
+        /* Header links and icons */
+        .header a {
+            color: white;
+            padding: 12px;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 4px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect for header links */
+        .header a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        /* Active class for the header link */
+        .header a.active {
+            background-color: dodgerblue;
+            color: white;
+        }
+
+        /* Right side (for navigation links and cart icon) */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Space between navigation items */
+        }
+
+        /* Cart icon styling */
+        .header-right .cart_icon img {
+            max-width: 30px; /* Adjust size of the cart icon */
+            height: auto;
+        }
+        
+        /* Media queries for mobile responsiveness */
+        @media screen and (max-width: 500px) {
+            .header {
+                flex-direction: column; /* Stack logo and links vertically */
+                align-items: flex-start; /* Align items to the left */
+            }
+
+            .header-right {
+                margin-top: 10px;
+                flex-direction: row; /* Keep the navigation and cart in a row */
+                gap: 10px;
+            }
+
+            .header a {
+                font-size: 16px;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('toggleDark');
+            const body = document.querySelector('body');
+            
+            toggle.addEventListener('click', function() {
+                // Toggle the icon classes for light/dark mode
+                if (this.classList.contains('bi-brightness-high-fill')) {
+                    body.style.background = 'white';
+                    body.style.color = 'black';
+                    this.classList.remove('bi-brightness-high-fill');
+                    this.classList.add('bi-moon');
+                } else {
+                    body.style.background = 'black';
+                    body.style.color = 'white';
+                    this.classList.remove('bi-moon');
+                    this.classList.add('bi-brightness-high-fill');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <div class="header">
+        <!-- Logo -->
+        <a href="login_page.html" class="logo">
+            <img src="images/logo.png" alt="Logo"> <!-- Make sure the path is correct -->
+        </a>
+
+        <!-- Right section: Navigation links and cart icon -->
+        <div class="header-right">
+            <!-- Light/Dark mode toggle icon -->
+            <i class="bi bi-brightness-high-fill" id="toggleDark"></i>
+            <a href="#home" class="active">Home</a>
+            <a href="#contact">Contact</a>
+            <a href="cart.html" class="cart_icon">
+                <img src="images/cart.png" alt="Cart"> <!-- Make sure the path is correct -->
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
