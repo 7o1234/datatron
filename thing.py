@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import csv
 
 class Dashboard:
     def __init__(self):
@@ -44,10 +45,25 @@ class Dashboard:
             if i not in self.items:
                 dict_s[i] = 0
 
+        
+        for i in modif:
+            if i in self.items:
+                dict[i] += 1
+            if i in self.meats:
+                self.meat_counter += 1 
+            if i in self.desserts:
+                self.desserts_counter += 1 
+            if i in self.sides:
+                self.sides_counter += 1 
+            if i in self.drinks:
+                self.drinks_counter += 1 
+            elif i not in self.items:
+                dict_s[i] += 1
+                
         for i in dict_s:
             for j in self.items:
                 try:
-                    i.index(j[0:4]) 
+                    i.index(j) 
                 except:
                     continue
                 dict[j] += dict_s[i]
@@ -56,20 +72,6 @@ class Dashboard:
                 dict["Chips"] += dict_s[i]
                 dict_s[i] = 0
         
-        for i in modif:
-            if i in self.items:
-                dict[i] += 1
-            elif i in self.meats:
-                self.meat_counter += 1 
-            elif i in self.desserts:
-                self.desserts_counter += 1 
-            elif i in self.sides:
-                self.sides_counter += 1 
-            elif i in self.drinks:
-                self.drinks_counter += 1 
-            else:
-                dict_s[i] += 1
-            
                 
        
         return dict, dict_s
@@ -81,16 +83,18 @@ class Dashboard:
         Shirt_addon_cost = 0
 
         
-        modif = self.df["Modifier"]
+        modif = self.df["Option Group Name"]
         for i in modif:
             if  i == "Choose Your Shirt":
                 Shirt_addon_cost += 19.05
-            elif "Shirt" == i:
-                shirts_cost += 19.95
+            
+            # elif self.df.loc[i] == "Shirt":
+            #     shirts_cost += 19.95
+            #     print("other shirt added")
 
 
 
-        
+        modif = self.df["Modifier"]
         for i in modif:
             if i  == "Water":
                 water_cost = water_cost + 1.49
@@ -110,18 +114,30 @@ class Dashboard:
         
         
         gross_income = (shirts_cost) + (Shirt_addon_cost) + (sides_cost) + (meats_cost) + (desserts_cost) + (drinks_cost) +(water_cost) +(Apple_cost) + (grill_cost) + (noods_cost)
+        
+        costs = {"Shirts": shirts_cost + Shirt_addon_cost, "Sides": sides_cost, "Meats": meats_cost, "Desserts": desserts_cost,"Drinks": drinks_cost+ water_cost+ Apple_cost,"Grilled Cheese": grill_cost, "Noodles": noods_cost}
+        
+        return gross_income, costs
 
 
-        return gross_income
 
 
 
 db = Dashboard()
-print(db.makeDicts())
+d1,d2 = db.makeDicts()
+gross,costs = db.calculateTotals()
 
-
-
-
+newdict = {}
+for i in d2:
+    if d2[i] != 0:
+        newdict[i] = d2[i]
+print(newdict)
+df = pd.DataFrame(newdict, index=[0])
+df.to_csv("extras.csv")
+df = pd.DataFrame(d1, index=[0])
+df.to_csv("main.csv")
+df = pd.DataFrame(costs, index=[0])
+df.to_csv("costs.csv")
 
 
 
