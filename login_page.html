@@ -23,6 +23,8 @@
             display: flex;
             justify-content: space-between; /* Space between logo and right section */
             align-items: center; /* Vertically center the items */
+            color: white;
+        
         }
 
         /* Logo styling */
@@ -50,7 +52,7 @@
 
         /* Active class for the header link */
         .header a.active {
-            background-color: dodgerblue;
+            
             color: white;
         }
 
@@ -66,6 +68,27 @@
             max-width: 30px; /* Adjust size of the cart icon */
             height: auto;
         }
+         /* Settings icon styling */
+         .settings-icon {
+            font-size: 30px;
+            cursor: pointer;
+        }
+         /* Dark theme styles */
+         body.dark-mode {
+            background-color: #121212; /* Dark background */
+            color: white; /* Light text color in dark mode */
+        }
+        .header a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+
+
         
         /* Media queries for mobile responsiveness */
         @media screen and (max-width: 500px) {
@@ -85,27 +108,7 @@
             }
         }
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggle = document.getElementById('toggleDark');
-            const body = document.querySelector('body');
-            
-            toggle.addEventListener('click', function() {
-                // Toggle the icon classes for light/dark mode
-                if (this.classList.contains('bi-brightness-high-fill')) {
-                    body.style.background = 'white';
-                    body.style.color = 'black';
-                    this.classList.remove('bi-brightness-high-fill');
-                    this.classList.add('bi-moon');
-                } else {
-                    body.style.background = 'black';
-                    body.style.color = 'white';
-                    this.classList.remove('bi-moon');
-                    this.classList.add('bi-brightness-high-fill');
-                }
-            });
-        });
-    </script>
+   
 </head>
 <body>
 
@@ -118,14 +121,36 @@
         <!-- Right section: Navigation links and cart icon -->
         <div class="header-right">
             <!-- Light/Dark mode toggle icon -->
-            <i class="bi bi-brightness-high-fill" id="toggleDark"></i>
-            <a href="#home" class="active">Home</a>
-            <a href="#contact">Contact</a>
+            <div class="header-right">
+                <i class="bi bi-gear settings-icon" id="settingsButton"></i>
+            </div>
+            
+            <a href="#login">Login</a>
             <a href="cart.html" class="cart_icon">
                 <img src="images/cart.png" alt="Cart"> <!-- Make sure the path is correct -->
             </a>
         </div>
     </div>
+    <script>
+        // Get the settings button and the body element
+        const settingsButton = document.getElementById('settingsButton');
+        const body = document.querySelector('body');
+
+        // Add event listener to the settings button
+        settingsButton.addEventListener('click', function() {
+            // Toggle the "dark-mode" class on the body element
+            body.classList.toggle('dark-mode');
+
+            // Optionally change the icon when toggling
+            if (body.classList.contains('dark-mode')) {
+                settingsButton.classList.remove('bi-gear');  // Remove gear icon
+                settingsButton.classList.add('bi-sun');      // Add sun icon (indicating light mode)
+            } else {
+                settingsButton.classList.remove('bi-sun');   // Remove sun icon
+                settingsButton.classList.add('bi-gear');     // Add gear icon (indicating dark mode)
+            }
+        });
+    </script>
 
 </body>
 </html>
