@@ -139,6 +139,7 @@ df = db.tt
 df_binary = df[['Time', 'Plays']] 
 # df_binary["Time"] = pd.to_datetime(df_binary["Time"],errors = 'coerce')
 # Eliminating NaN or missing input numbers 
+
 df_binary = df_binary.dropna()
 
 print(df_binary)
@@ -151,7 +152,7 @@ y = np.array(df_binary['Plays']).reshape(-1, 1)
 # Separating the data into independent and dependent variables 
 # Converting each dataframe into a numpy array 
 # since each dataframe contains only one column 
-df_binary.dropna(inplace = True) 
+#df_binary.dropna(inplace = True) 
 
 # Dropping any rows with Nan values 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25) 
@@ -163,8 +164,14 @@ regr.fit(X_train, y_train)
 print(regr.score(X_test, y_test)) 
 
 y_pred = regr.predict(X_test) 
-plt.scatter(X_test, y_test, color ='b') 
-plt.plot(X_test, y_pred, color ='k') 
+plt.scatter(X, y, color ='white') 
+plt.plot(X_test, y_pred, color ='#f5b84d') 
+# ax = plt.axes()
+# ax.set_facecolor("black")
+plt.gca().set_facecolor('black')  # Set plot area background color
+plt.xlabel('Time of Day (hh.mm)')
+plt.ylabel('Tiktok Views')
+plt.title("Tiktok Views vs Time of Day")
 
 plt.show() 
 # Data scatter of predicted values 
