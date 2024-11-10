@@ -31,5 +31,25 @@ for i in modif:
     else:
         dict_s[i] += 1
         #special.append(i)
+
+
+
+
+grill = df[df["Parent Menu Selection"] == "Grilled Cheese Sandwich"]
+grill_2  = grill[grill["Option Group Name"] == "Choose Your Drink" ]
+print(grill_2.size)
 print(dict)
 print(dict_s)
+
+
+
+
+
+
+
+
+
+
+
+
+
