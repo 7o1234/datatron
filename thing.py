@@ -1,6 +1,14 @@
 import pandas as pd
 import os
 import csv
+import numpy as np 
+import pandas as pd 
+import seaborn as sns 
+import matplotlib.pyplot as plt 
+from sklearn import preprocessing, svm 
+from sklearn.model_selection import train_test_split 
+from sklearn.linear_model import LinearRegression 
+
 
 class Dashboard:
     def __init__(self):
@@ -14,7 +22,7 @@ class Dashboard:
         self.meat_counter = 0
         self.sides_counter = 0
         self.drinks_counter = 0 
-
+        self.tt = pd.read_csv("tiktok_stats.csv")
 
 
 
@@ -127,17 +135,51 @@ db = Dashboard()
 d1,d2 = db.makeDicts()
 gross,costs = db.calculateTotals()
 
-newdict = {}
-for i in d2:
-    if d2[i] != 0:
-        newdict[i] = d2[i]
-print(newdict)
-df = pd.DataFrame(newdict, index=[0])
-df.to_csv("extras.csv")
-df = pd.DataFrame(d1, index=[0])
-df.to_csv("main.csv")
-df = pd.DataFrame(costs, index=[0])
-df.to_csv("costs.csv")
+df = db.tt 
+df_binary = df[['Time', 'Plays']] 
+# df_binary["Time"] = pd.to_datetime(df_binary["Time"],errors = 'coerce')
+# Eliminating NaN or missing input numbers 
+df_binary = df_binary.dropna()
+
+print(df_binary)
+
+
+
+X = np.array(df_binary['Time']).reshape(-1, 1) 
+y = np.array(df_binary['Plays']).reshape(-1, 1) 
+
+# Separating the data into independent and dependent variables 
+# Converting each dataframe into a numpy array 
+# since each dataframe contains only one column 
+df_binary.dropna(inplace = True) 
+
+# Dropping any rows with Nan values 
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25) 
+
+# Splitting the data into training and testing data 
+regr = LinearRegression() 
+
+regr.fit(X_train, y_train) 
+print(regr.score(X_test, y_test)) 
+
+y_pred = regr.predict(X_test) 
+plt.scatter(X_test, y_test, color ='b') 
+plt.plot(X_test, y_pred, color ='k') 
+
+plt.show() 
+# Data scatter of predicted values 
+
+# newdict = {}
+# for i in d2:
+#     if d2[i] != 0:
+#         newdict[i] = d2[i]
+# print(newdict)
+# df = pd.DataFrame(newdict, index=[0])
+# df.to_csv("extras.csv")
+# df = pd.DataFrame(d1, index=[0])
+# df.to_csv("main.csv")
+# df = pd.DataFrame(costs, index=[0])
+# df.to_csv("costs.csv")
 
 
 
