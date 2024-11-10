@@ -11,24 +11,42 @@
         }
 
         html, body {
-            margin: 0; /* Remove default margin */
+            margin: 0;
             font-family: Arial, Helvetica, sans-serif;
-            transition: background 2s, color 2s;
+            background-color: black; /* Set background color to black */
+            color: white; /* Set text color to white for contrast */
+            height: 100%;
+            overflow: hidden; /* Prevents scrolling */
         }
 
         .header {
-            background-color: black;
+            background-color: rgb(255, 196, 0);
             padding: 20px 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             color: white;
+            position: relative;
+            z-index: 1000;
+        }
+
+        /* Align logo and menu button */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .header a.logo img {
             max-height: 50px;
             width: auto;
-            margin-left: 10px;
+        }
+
+        /* Center image styling */
+        .header-center-image {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .header a {
@@ -37,7 +55,6 @@
             text-decoration: none;
             font-size: 18px;
             border-radius: 4px;
-            display: inline-block;
             transition: background-color 0.3s ease;
         }
 
@@ -46,20 +63,31 @@
             color: black;
         }
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .settings-icon {
+        /* Style menu button */
+        .menu-button {
             font-size: 30px;
             cursor: pointer;
+            color: white;
         }
 
-        body.dark-mode {
-            background-color: #121212;
-            color: white;
+        /* Full-screen Tableau dashboard container with small margins */
+        .tableau-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: calc(100vh - 80px); /* Full viewport height minus header height */
+            padding: 10px; /* Small padding for margin effect */
+        }
+
+        /* Centered Tableau Dashboard with max constraints for margin effect */
+        .tableauPlaceholder {
+            max-width: 95vw;  /* Constrain max width to provide small margins */
+            max-height: 95vh; /* Constrain max height to provide small margins */
+            width: 100%;
+            height: 100%;
+            background-color: black; /* Ensure background matches the body */
+            border-radius: 8px; /* Optional: rounded corners for a smooth appearance */
         }
 
         /* Side menu styling */
@@ -94,16 +122,6 @@
             top: 0;
             right: 25px;
             font-size: 36px;
-            margin-left: 50px;
-        }
-
-        /* Button to open side menu */
-        .menu-button {
-            font-size: 30px;
-            cursor: pointer;
-            color: white;
-            float: left;
-            margin-left: 10px;
         }
 
         /* Loading screen styling */
@@ -127,148 +145,74 @@
             height: 20px;
             border-radius: 20px;
             background: linear-gradient(orange 0 0) 0/0% no-repeat rgb(224, 176, 17);
-            animation: l2 5s infinite steps(10);
+            animation: l2 2s infinite steps(20);
         }
 
         @keyframes l2 {
             100% {background-size:110%}
         }
-
-        /* 3x3 grid of white boxes */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            justify-content: center;
-            margin: 50px auto;
-            padding: 20px;
-        }
-
-        .grid-item {
-            background-color: white;
-            width: 100px;
-            height: 100px;
-            border: 1px solid #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: black;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-        }
-
-        /* Login modal styling */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-            text-align: center;
-        }
-
-        .modal-content h2 {
-            margin-bottom: 20px;
-        }
-
-        .modal-content input[type="text"],
-        .modal-content input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .modal-content button {
-            padding: 10px 20px;
-            background-color: black;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .modal-content button:hover {
-            background-color: #333;
-        }
-
-        @media screen and (max-width: 500px) {
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .header-right {
-                margin-top: 10px;
-                flex-direction: row;
-                gap: 10px;
-            }
-
-            .header a {
-                font-size: 16px;
-            }
-        }
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
     <div class="loadingScreen">
         <div class="loader"></div>
     </div>
 
+    <!-- Header with left-aligned logo, centered image, and menu button -->
     <div class="header">
-        <span class="menu-button" onclick="openNav()">&#9776;</span>
-        <a href="login_page.html" class="logo">
-            <img src="/images/logo.png" alt="Logo">
-        </a>
+        <div class="logo-container">
+            <a href="login_page.html" class="logo">
+                <img src="/images/logo.png" alt="Logo">
+            </a>
+            <span class="menu-button" onclick="openNav()">&#9776;</span>
+        </div>
         
-        <div class="header-right">
-            <i class="bi bi-gear settings-icon" id="settingsButton"></i>
-            <a href="javascript:void(0)" onclick="openModal()">Login</a>
-        </div>
-    </div>
-    
-    <!-- 3x3 White Boxes Grid -->
-    <div class="grid-container">
-        <div class="grid-item">1</div>
-        <div class="grid-item">2</div>
-        <div class="grid-item">3</div>
-        <div class="grid-item">4</div>
-        <div class="grid-item">5</div>
-        <div class="grid-item">6</div>
-        <div class="grid-item">7</div>
-        <div class="grid-item">8</div>
-        <div class="grid-item">9</div>
-    </div>
-
-    <!-- Login Modal -->
-    <div class="modal" id="loginModal">
-        <div class="modal-content">
-            <h2>Login</h2>
-            <input type="text" placeholder="Username">
-            <input type="password" placeholder="Password">
-            <button onclick="closeModal()">Submit</button>
+        <!-- Centered Image -->
+        <div class="header-center-image">
+            <img src="/images/Ronis-Black.png" alt="Centered Image" style="height: 50px; width: auto;">
         </div>
     </div>
 
+    <!-- Centered Tableau Dashboard with small margins -->
+    <div class="tableau-container">
+        <div class="tableauPlaceholder" id="viz1731260112693">
+            <noscript>
+                <a href="#"><img alt="Dashboard" src="https://public.tableau.com/static/images/ro/ronismacbar/Dashboard1/1_rss.png" style="border: none"/></a>
+            </noscript>
+            <object class="tableauViz" style="width: 100%; height: 100%;">
+                <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
+                <param name="embed_code_version" value="3" />
+                <param name="site_root" value="" />
+                <param name="name" value="ronismacbar/Dashboard1" />
+                <param name="tabs" value="no" />
+                <param name="toolbar" value="yes" />
+                <param name="static_image" value="https://public.tableau.com/static/images/ro/ronismacbar/Dashboard1/1.png" />
+                <param name="animate_transition" value="yes" />
+                <param name="display_static_image" value="yes" />
+                <param name="display_spinner" value="yes" />
+                <param name="display_overlay" value="yes" />
+                <param name="display_count" value="yes" />
+                <param name="language" value="en-US" />
+                <param name="filter" value="publish=yes" />
+            </object>
+        </div>
+        <script type="text/javascript">
+            var divElement = document.getElementById('viz1731260112693');
+            var vizElement = divElement.getElementsByTagName('object')[0];
+            vizElement.style.width = "100%";
+            vizElement.style.height = "100%";
+            var scriptElement = document.createElement('script');
+            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+            vizElement.parentNode.insertBefore(scriptElement, vizElement);
+        </script>
+    </div>
+
+    <!-- Sidebar Navigation -->
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#home">Home</a>
-        <a href="#Inventory">Services</a>
-        
+        <a href="login_page.html">Home</a>
+        <a href="inventory.html">Inventory</a>
     </div>
 
     <script>
@@ -280,28 +224,11 @@
             document.getElementById("mySidenav").style.width = "0";
         }
 
-        const settingsButton = document.getElementById('settingsButton');
-        const body = document.querySelector('body');
-
-        settingsButton.addEventListener('click', function() {
-            body.classList.toggle('dark-mode');
-            settingsButton.classList.toggle('bi-sun', body.classList.contains('dark-mode'));
-            settingsButton.classList.toggle('bi-gear', !body.classList.contains('dark-mode'));
-        });
-
         window.addEventListener('load', function() {
             setTimeout(function() {
                 document.querySelector('.loadingScreen').style.display = 'none';
-            }, 3000);
+            }, 2000);
         });
-
-        function openModal() {
-            document.getElementById("loginModal").style.display = "flex";
-        }
-
-        function closeModal() {
-            document.getElementById("loginModal").style.display = "none";
-        }
     </script>
 </body>
 </html>
